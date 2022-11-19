@@ -8,10 +8,11 @@
     <title>Wagers</title>
 </head>
 <body class="bg-light">
-    {% include 'navbar.html' %}>
+    {% include 'navbar.html' %}
     
     <div class="container">
-        {% include 'index.html' %}
+        {% block content %}
+        {% endblock %}
         
     </div>
 

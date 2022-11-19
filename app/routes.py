@@ -16,6 +16,11 @@ def signup():
         email = form.email.data
         username = form.username.data
         password = form.password.data
+
+        new_user = User(email=email, username=username, password=password)
+
+        print(new_user)
+
         print(email, username, password)
         return redirect(url_for('index'))
 

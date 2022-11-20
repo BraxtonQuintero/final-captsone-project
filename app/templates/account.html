@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome User to Call of Duty Hub{% endblock %}
+
+{% block content %}
+
+<div class="row align-items-center justify-content-evenly">
+    <h1>This is Your Account Settings Page</h1>
+</div>
+<ul>
+    <li>{{ current_user.username }}</li>
+    <li>{{ current_user.email }}</li>
+</ul>
+
+{% endblock content %}

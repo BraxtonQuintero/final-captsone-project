@@ -53,3 +53,13 @@ def logout():
     logout_user()
     flash('You have been logged out', 'info')
     return redirect(url_for('index'))
+
+@app.route("/account/user_id", methods= ["GET"])
+@login_required
+def account():
+    email = User.email
+    username = User.username
+
+    account = User.query.filter_by(username=username, email=email)
+
+    return render_template('account.html', account=account)

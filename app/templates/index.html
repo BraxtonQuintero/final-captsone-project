@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-<div>
-    <h1 class="text-center">Welcome User to Call of Duty Hub</h1>
-</div>
+{% if current_user.is_authenticated %}
+<h1 class="text-center">Hello {{ current_user }}!</h1>
+{% else %}
+<h1 class="text-center">Hello, please sign up or login to use the blog</h1>
+{% endif %}
 
 {% block content %}
 
@@ -11,9 +13,9 @@
       <h1>About Call of Duty Hub</h1>
     </div>
     <div class="col bg-primary mt-5 text text-center">
-      <iframe src="demo_iframe.htm" name="iframe_a" title="Iframe Example"></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/a3Ul4pq3cTY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-      <p><a class="text-light text-decoration-none" href="https://www.youtube.com/@CODLeague" target="iframe_a">Competitive Call Of Duty!</a></p>
+      <p><a target="iframe_a">Competitive Call Of Duty!</a></p>
 
     </div>
     <div class="col bg-primary m-5">

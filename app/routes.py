@@ -63,3 +63,23 @@ def account():
     account = User.query.filter_by(username=username, email=email)
 
     return render_template('account.html', account=account)
+
+@app.route("/eights", methods= ["GET"])
+@login_required
+def eights():
+    email = User.email
+    username = User.username
+
+    account = User.query.filter_by(username=username, email=email)
+
+    return render_template('eights.html', account=account)
+
+@app.route("/teamates", methods= ["GET"])
+@login_required
+def teamates():
+    email = User.email
+    username = User.username
+
+    account = User.query.filter_by(username=username, email=email)
+
+    return render_template('teamates.html', account=account)

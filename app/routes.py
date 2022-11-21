@@ -1,8 +1,9 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app
-from app.forms import SignUpForm, LogInForm
-from app.models import User
+from app import models
+from app.forms import MatchForm, SignUpForm, LogInForm
+from app.models import User, Matches
 
 @app.route("/")
 def index():
@@ -47,7 +48,6 @@ def login():
 
     return render_template('login.html', form=form)
 
-
 @app.route('/logout')
 def logout():
     logout_user()
@@ -64,15 +64,20 @@ def account():
 
     return render_template('account.html', account=account)
 
-@app.route("/eights", methods= ["GET"])
+@app.route("/match", methods= ["GET", "POST"])
 @login_required
-def eights():
-    email = User.email
-    username = User.username
+def match():
+    form = MatchForm()
+    if form.validate_on_submit():
+        maps = form.maps.data
+        modes = form.modes.data
 
-    account = User.query.filter_by(username=username, email=email)
+        eights_lobby = Matches.filter_by(maps=maps, modes=modes)
 
-    return render_template('eights.html', account=account)
+        print(eights_lobby)
+        return redirect(url_for('match'))
+
+    return render_template('index.html', form=form)
 
 @app.route("/teamates", methods= ["GET"])
 @login_required
@@ -83,3 +88,13 @@ def teamates():
     account = User.query.filter_by(username=username, email=email)
 
     return render_template('teamates.html', account=account)
+
+@app.route("/eights", methods= ["GET", "POST"])
+@login_required
+def eights():
+    email = User.email
+    username = User.username
+
+    account = User.query.filter_by(username=username, email=email)
+
+    return render_template('eights.html', account=account)

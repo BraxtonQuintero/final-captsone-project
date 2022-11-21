@@ -8,6 +8,7 @@ from cod_api import API
 app = Flask(__name__)
 
 api = API()
+api.login('MzEyNjA0MTUyNjM5ODQzOTk0OToxNjcwMjY3Njk1NzA2Ojc0Yjg2OTcwNzA4ZmRjMzA5ZWQ3MGRjMjkxN2M3NDJk')
 
 app.config.from_object(Config)
 

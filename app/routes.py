@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app
-from app import models
+# from app import models
 from app.forms import MatchForm, SignUpForm, LogInForm
 from app.models import User, Matches
 
@@ -82,9 +82,9 @@ def match():
         maps = form.maps.data
         modes = form.modes.data
 
-        eights_lobby = Matches.query.filter_by(maps=maps, modes=modes)
+        new_match = Matches.query.filter_by(maps=maps, modes=modes)
 
-        print(eights_lobby)
+        print(new_match)
         return redirect(url_for('eights'))
 
     return render_template('match.html', form=form)

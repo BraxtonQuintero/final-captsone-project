@@ -5,8 +5,36 @@
 {% block content %}
 
 <div class="row align-items-center justify-content-evenly text-center mt-3">
-    <h1>This is the 8's page</h1>
+    <h1>This is the 8's page as the header</h1>
     <a href="{{ url_for('match') }}" class="btn btn-dark mt-4 text-light">Create Match!</a>
 </div>
+
+<div class="row">
+    <div class="col">
+        <div class="card my-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ match.maps }}</h5>
+                <p class="card-text">{{ match.modes }}</p>
+                <p class="card-text"><small class="text-muted">{{ User.user_id }}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- {% for match in matches %}
+<div class="card">
+    <div class="card-body">
+    <blockquote class="blockquote mb-0">
+        <p>{{ Matches.maps }}</p>
+        <p>{{ Matches.modes }}</p>
+    </blockquote>
+    <a href="{{ url_for('get_post', post_id=post.id) }}" class="btn btn-primary mt-2">See More</a> -->
+    <!-- {% if post.author == current_user %}
+    <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-success mt-2">Edit</a>
+    {% endif %}
+    </div>
+</div>
+{% endfor %}  -->
 
 {% endblock content %}

@@ -64,6 +64,16 @@ def account():
 
     return render_template('account.html', account=account)
 
+@app.route("/account/user_id", methods= ["GET"])
+@login_required
+def profile():
+    email = User.email
+    username = User.username
+
+    profile = User.query.filter_by(username=username, email=email)
+
+    return render_template('profile.html', profile=profile)
+
 @app.route("/match", methods= ["GET", "POST"])
 @login_required
 def match():

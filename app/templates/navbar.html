@@ -1,6 +1,6 @@
   <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Wagers</a>
+      <a class="navbar-brand" href="#">COD Hub</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,7 +21,7 @@
               {{ current_user.username }}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Blank</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile Statistics</a></li>
               <li><a class="dropdown-item" href="{{ url_for('account') }}">Account Settings</a></li>
               <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
             </ul>

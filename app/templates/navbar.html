@@ -1,26 +1,26 @@
-  <nav class="navbar navbar-expand-lg bg-primary">
+  <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">COD Hub</a>
+      <a class="navbar-brand text-light">COD Hub</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-start" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+            <a class="nav-link active text-light" aria-current="page" href="{{ url_for('index') }}">Home</a>
           </li>
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('eights') }}">8's Lobbys</a>
+            <a class="nav-link active text-light" aria-current="page" href="{{ url_for('eights') }}">8's Lobbys</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('teamates') }}">Find Teamates</a>
+            <a class="nav-link active text-light" aria-current="page" href="{{ url_for('teamates') }}">Find Teamates</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item dropdown text-light">
+            <a class="nav-link active dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ current_user.username }}
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu text-light">
               <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile Statistics</a></li>
               <li><a class="dropdown-item" href="{{ url_for('account') }}">Account Settings</a></li>
               <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
@@ -28,10 +28,10 @@
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+            <a class="nav-link text-light" href="{{ url_for('signup') }}">Sign Up</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-link text-light" href="{{ url_for('login') }}">Login</a>
           </li>
           {% endif %}
         </ul>

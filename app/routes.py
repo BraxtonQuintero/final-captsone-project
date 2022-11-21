@@ -20,7 +20,7 @@ def signup():
 
         new_user = User(email=email, username=username, password=password)
 
-        print(new_user)
+        login_user(new_user)
 
         print(email, username, password)
         return redirect(url_for('index'))
@@ -74,7 +74,7 @@ def profile():
 
     return render_template('profile.html', profile=profile)
 
-@app.route("/match", methods= ["GET", "POST"])
+@app.route("/eights/match", methods= ["GET", "POST"])
 @login_required
 def match():
     form = MatchForm()
@@ -82,12 +82,12 @@ def match():
         maps = form.maps.data
         modes = form.modes.data
 
-        eights_lobby = Matches.filter_by(maps=maps, modes=modes)
+        eights_lobby = Matches.query.filter_by(maps=maps, modes=modes)
 
         print(eights_lobby)
-        return redirect(url_for('match'))
+        return redirect(url_for('eights'))
 
-    return render_template('index.html', form=form)
+    return render_template('match.html', form=form)
 
 @app.route("/teamates", methods= ["GET"])
 @login_required

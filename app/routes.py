@@ -90,15 +90,15 @@ def match():
 
     return render_template('match.html', form=form)
 
-@app.route("/teamates/<user_id>", methods= ["GET", "POST"])
+@app.route("/teammates/<user_id>", methods= ["GET", "POST"])
 @login_required
-def teamates(user_id):
+def teammates(user_id):
     user = User.query.get(user_id)
-    return render_template('teamates.html', user=user)
+    return render_template('teammates.html', user=user)
 
-@app.route("/search_teamates", methods= ["GET", "POST"])
+@app.route("/search_teammates", methods= ["GET", "POST"])
 @login_required
-def search_teamates():
+def search_teammates():
     form = SearchForm()
     if form.validate_on_submit():
 
@@ -106,12 +106,12 @@ def search_teamates():
         search_user = User.query.filter(User.username == username).first()
 
         if search_user is not None:
-            return redirect(url_for('teamates', user_id=search_user.id))
+            return redirect(url_for('teammates', user_id=search_user.id))
         else:
             flash(f"Teammate was not found {username}", "danger")
-            return redirect(url_for('search_teamates', form=form))
+            return redirect(url_for('search_teammates', form=form))
 
-    return render_template('search_teamates.html', form=form)
+    return render_template('search_teammates.html', form=form)
 
 
 @app.route("/eights", methods= ["GET", "POST"])

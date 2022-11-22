@@ -90,21 +90,33 @@ def match():
 
     return render_template('match.html', form=form)
 
-@app.route("/teamates", methods= ["GET"])
+@app.route("/teamates/<user_id>", methods= ["GET", "POST"])
 @login_required
-def teamates():
-    email = User.email
-    username = User.username
+def teamates(user_id):
+    user = User.query.get(user_id)
+    return render_template('teamates.html', user=user)
 
-    account = User.query.filter_by(username=username, email=email)
+@app.route("/search_teamates", methods= ["GET", "POST"])
+@login_required
+def search_teamates():
+    form = SearchForm()
+    if form.validate_on_submit():
 
-    return render_template('teamates.html', account=account)
+        username = form.username.data
+        search_user = User.query.filter(User.username == username).first()
+
+        if search_user is not None:
+            return redirect(url_for('teamates', user_id=search_user.id))
+        else:
+            flash(f"Teammate was not found {username}", "danger")
+            return redirect(url_for('search_teamates', form=form))
+
+    return render_template('search_teamates.html', form=form)
+
 
 @app.route("/eights", methods= ["GET", "POST"])
 @login_required
 def eights():
-
-    print('hello world')
     matches = Matches.query.order_by(Matches.date_created.desc()).all()
     print(matches)
 
@@ -145,17 +157,3 @@ def delete_match(match_id):
     match.delete()
     flash(f"{Matches.id} has been deleted", 'info')
     return redirect(url_for('eights'))
-
-# @app.route('/search', methods=['POST'])
-# @login_required
-# def search():
-#   form = SearchForm()
-#   if not form.validate_on_submit():
-#     return redirect(url_for('teamates'))
-#   return redirect((url_for('search_results', query=form.search.data)))
-
-# @app.route('/search_results/<query>')
-# @login_required
-# def search_results(query):
-#   results = User.query.whoosh_search(query).all()
-#   return render_template('search_results.html', query=query, results=results)

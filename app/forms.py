@@ -21,5 +21,5 @@ class MatchForm(FlaskForm):
     submit = SubmitField()
 
 class SearchForm(FlaskForm):
-  search = StringField('search', [DataRequired()])
+  username = StringField('Search Username', [DataRequired()])
   submit = SubmitField('Search')

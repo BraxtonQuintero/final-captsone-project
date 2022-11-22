@@ -83,7 +83,7 @@ def match():
         maps = form.maps.data
         modes = form.modes.data
 
-        new_match = Matches(maps=maps, modes=modes)
+        new_match = Matches(maps=maps, modes=modes, user_id=current_user.id)
 
         print(new_match)
         return redirect(url_for('eights'))
@@ -103,23 +103,59 @@ def teamates():
 @app.route("/eights", methods= ["GET", "POST"])
 @login_required
 def eights():
-    maps = Matches.maps
-    modes = Matches.modes
 
-    match = Matches.query.filter_by(maps=maps, modes=modes)
+    print('hello world')
+    matches = Matches.query.order_by(Matches.date_created.desc()).all()
+    print(matches)
 
-    return render_template('eights.html', match=match)
+    return render_template('eights.html', matches=matches)
 
-@app.route('/search', methods=['POST'])
+
+@app.route('/edit_match/<match_id>/edit', methods=['GET', 'POST'])
 @login_required
-def search():
-  form = SearchForm()
-  if not form.validate_on_submit():
-    return redirect(url_for('teamates'))
-  return redirect((url_for('search_results', query=form.search.data)))
+def edit_match(match_id):
+    match = Matches.query.get(match_id)
+    if not match:
+        flash(f"Match with id #{match_id} does not exist", "warning")
+        return redirect(url_for('index'))
+    if match.user_id != current_user.id:
+        flash('You do not have permission to edit this post', 'danger')
+        return redirect(url_for('index'))
+    form = MatchForm()
+    if form.validate_on_submit():
+        new_maps = form.maps.data
+        new_modes = form.modes.data
 
-@app.route('/search_results/<query>')
+        match.update(maps=new_maps, modes=new_modes)
+        flash(f"{match_id} has been updated", "success")
+
+        return redirect(url_for('eights', match_id=match.id))
+    return render_template('edit_match.html', match=match, form=form)
+
+@app.route('/delete_match/<match_id>/delete')
 @login_required
-def search_results(query):
-  results = User.query.whoosh_search(query).all()
-  return render_template('search_results.html', query=query, results=results)
+def delete_match(match_id):
+    match = Matches.query.get(match_id)
+    if not match:
+        flash(f"Post with id #{match_id} does not exist", "warning")
+        return redirect(url_for('eights'))
+    if match.user_id != current_user.id:
+        flash('You do not have permission to delete this post', 'danger')
+        return redirect(url_for('eights'))
+    match.delete()
+    flash(f"{Matches.id} has been deleted", 'info')
+    return redirect(url_for('eights'))
+
+# @app.route('/search', methods=['POST'])
+# @login_required
+# def search():
+#   form = SearchForm()
+#   if not form.validate_on_submit():
+#     return redirect(url_for('teamates'))
+#   return redirect((url_for('search_results', query=form.search.data)))
+
+# @app.route('/search_results/<query>')
+# @login_required
+# def search_results(query):
+#   results = User.query.whoosh_search(query).all()
+#   return render_template('search_results.html', query=query, results=results)

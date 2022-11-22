@@ -75,7 +75,7 @@ def profile():
 
     return render_template('profile.html', profile=profile)
 
-@app.route("/eights/match", methods= ["GET", "POST"])
+@app.route("/match", methods= ["GET", "POST"])
 @login_required
 def match():
     form = MatchForm()
@@ -83,7 +83,7 @@ def match():
         maps = form.maps.data
         modes = form.modes.data
 
-        new_match = Matches.query.filter_by(maps=maps, modes=modes)
+        new_match = Matches(maps=maps, modes=modes)
 
         print(new_match)
         return redirect(url_for('eights'))
@@ -103,12 +103,12 @@ def teamates():
 @app.route("/eights", methods= ["GET", "POST"])
 @login_required
 def eights():
-    email = User.email
-    username = User.username
+    maps = Matches.maps
+    modes = Matches.modes
 
-    account = User.query.filter_by(username=username, email=email)
+    match = Matches.query.filter_by(maps=maps, modes=modes)
 
-    return render_template('eights.html', account=account)
+    return render_template('eights.html', match=match)
 
 @app.route('/search', methods=['POST'])
 @login_required

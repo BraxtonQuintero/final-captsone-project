@@ -44,12 +44,9 @@ class Matches(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def __repr__(self):
-        return f"<Post {self.id} | {self.title}>"
-
     def update(self, **kwargs):
         for key, value in kwargs.items():
-            if key in {'title', 'body'}:        
+            if key in {'maps', 'modes'}:        
                 setattr(self, key, value)
 
         db.session.commit()

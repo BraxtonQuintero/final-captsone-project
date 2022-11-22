@@ -19,3 +19,7 @@ class MatchForm(FlaskForm):
     modes = StringField('Type of Mode', validators=[DataRequired()])
     maps = StringField('Maps', validators=[DataRequired()])
     submit = SubmitField()
+
+class SearchForm(FlaskForm):
+  search = StringField('search', [DataRequired()])
+  submit = SubmitField('Search')

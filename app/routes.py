@@ -2,12 +2,13 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app
 # from app import models
-from app.forms import MatchForm, SignUpForm, LogInForm
+from app.forms import MatchForm, SignUpForm, LogInForm, SearchForm
 from app.models import User, Matches
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    myUser = User.query.all()
+    return render_template('index.html', myUser=myUser)
 
 @app.route("/signup", methods= ["GET", "POST"])
 def signup():
@@ -108,3 +109,17 @@ def eights():
     account = User.query.filter_by(username=username, email=email)
 
     return render_template('eights.html', account=account)
+
+@app.route('/search', methods=['POST'])
+@login_required
+def search():
+  form = SearchForm()
+  if not form.validate_on_submit():
+    return redirect(url_for('teamates'))
+  return redirect((url_for('search_results', query=form.search.data)))
+
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+  results = User.query.whoosh_search(query).all()
+  return render_template('search_results.html', query=query, results=results)
